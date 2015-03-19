@@ -87,6 +87,110 @@
 		return result;
 	}
 	
+	function getFunctionName(f) {
+		var str = f+"";
+		var i = str.indexOf("function ");
+		if(i===-1) {
+			return null;
+		}
+		var j = i + "function ".length;
+		var k = str.indexOf("(",j);
+		if(k===-1) {
+			return null;
+		}
+		return str.substring(j,k);
+		//return /\W*function\s+([\w\$]+)\(/.exec( f.toString() )[ 1 ]; // this code breaks when run through minify/uglify
+	}
+	
+	function FunctionFormat(spec,func) {
+		this.spec = spec;
+		this.func = func;
+	}
+	FunctionFormat.prototype.format = function() {
+		if(!this.spec) {
+			return this.func+"";
+		}
+		var substitutions = [];
+		substitutions.push(this.getValue());
+		substitutions.push(this.getHead());
+		substitutions.push(this.getArguments());
+		substitutions.push(this.getBody());
+		substitutions.push(this.getLength());
+		substitutions.push(this.getNameAnonymous());
+		substitutions.push(this.getName());
+		var str = ""+this.spec;
+		substitutions.forEach(function(substitution) {
+			if(substitution) {
+				str = str.replace(substitution.pattern,substitution.substitute);
+			}
+		});
+		return str;
+	}
+	//{function: {format: "v"}} - returns the value of evaluating the function. This obviously only works for functions that take no arguments.
+	FunctionFormat.prototype.getValue = function() {
+		if(this.spec.indexOf("v")>=0) {
+			return {substitute: this.func(), pattern:"v"};
+		};
+		return null;
+	}
+	//{function: {format: "h"}} - returns the head of the function definition, i.e. its name and argument signature with parentheses.
+	FunctionFormat.prototype.getHead = function() {
+		if(this.spec.indexOf("h")>=0) {
+			var fstr = this.func+"";
+			var end = fstr.indexOf(" {");
+			return {substitute: fstr.substring(0,end), pattern:"h"};
+		};
+		return null;
+	}
+	//{function: {format: "a"}} - returns the comma separated arguments of the function definition without parentheses.
+	FunctionFormat.prototype.getArguments = function() {
+		if(this.spec.indexOf("a")>=0) {
+			var fstr = this.func+"";
+			var start = fstr.indexOf("(");
+			var end = fstr.indexOf(")");
+			var substr;
+			if(start>=0 && end>=0 && start<end) {
+				substr = fstr.substring(start+1,end); // drop the ()
+			}
+			return {substitute: substr.split(",").join(", "), pattern:"a"};
+		};
+		return null;
+	}
+	//{function: {format: "b"}} - returns the body of the function definition without curly braces.
+	FunctionFormat.prototype.getBody = function() {
+		if(this.spec.indexOf("b")>=0) {
+			var fstr = this.func+"";
+			var start = fstr.indexOf("{");
+			var end = fstr.lastIndexOf("}");
+			return {substitute: fstr.substring(start+2,end-1), pattern:"b"};
+		};
+		return null;
+	}
+	//{function: {format: "l"}} - returns the value of the length property of the function, i.e. arity.
+	FunctionFormat.prototype.getLength = function() {
+		if(this.spec.indexOf("l")>=0) {
+			return {substitute: this.func.length, pattern:"l"};
+		};
+		return null;
+	}
+	//{function: {format: "na"}} - returns the value of the name property of the function, the string "anonymous" is returned for no name.
+	FunctionFormat.prototype.getNameAnonymous = function() {
+		if(this.spec.indexOf("na")>=0) {
+			var name = (getFunctionName(this.func)==null ? "anonymous" : this.func.name);
+			return {substitute: name, pattern:"na"};
+		};
+		return null;
+	}
+	//{function: {format: "n"}} - returns the value of the name property of the function, an empty string is returned for no name.
+	FunctionFormat.prototype.getName = function() {
+		if(this.spec.indexOf("n")>=0) {
+			var name = (getFunctionName(this.func)==null ? "" : this.func.name);
+			return {substitute: name, pattern:"n"};
+		};
+		return null;
+	}
+
+	
 	function DateFormat(spec,date) {
 		this.spec = spec;
 		this.date = date;
@@ -453,9 +557,6 @@
 					}
 					result = padding+result;
 					return result;
-				},
-				Function: function(spec,value) {
-				// name, signature
 				}
 			}
 		this.formats.object = this.formats.Object;
@@ -659,10 +760,16 @@
 		var dateformat = new DateFormat(spec.format,this);
 		return dateformat.format();
 	}
+	function  functionFormatter(spec) {
+		var functionformat = new FunctionFormat(spec.format,this);
+		return functionformat.format();
+	}
 
 	exports.StringFormatter = new StringFormatter();
 	exports.StringFormatter.register(Array,arrayFormatter,"Array");
 	exports.StringFormatter.register(Object,objectFormatter,"Object");
 	exports.StringFormatter.register(Object,objectFormatter,"object");
 	exports.StringFormatter.register(Date,dateFormatter,"Date");
+	exports.StringFormatter.register(Function,functionFormatter,"Function");
+	exports.StringFormatter.register(Function,functionFormatter,"function");
 })("undefined"!=typeof exports&&"undefined"!=typeof global?global:window);

@@ -6,6 +6,8 @@ StringFormatter JS Test
 <script type="text/javascript" src="../StringFormatter.js">
 </script>
 <body>
+<span style="color:red">Some of the function formatting tests will fail in Safari since Safari converts functions to strings differently than other browsers; however, it is just
+spacing in the expected value strings and all should work fine in production code.</span>
 <script>
 var format, value, expected, result;
 var tests =[
@@ -195,6 +197,26 @@ var tests =[
 		expected:"{\"v1\":\"one\"}"
 	},
 	{
+		format:"{function}",
+		value: function aFunction(arg1,arg2) { return arg1 + arg2; },
+		expected:(function aFunction(arg1,arg2) { return arg1 + arg2; })+""
+	},
+	{
+		format:"{function : {format: 'h'}}",
+		value: function aFunction(arg1,arg2) { return arg1 + arg2; },
+		expected:"function aFunction(arg1,arg2)"
+	},
+	{
+		format:"{function : {format: 'a'}}",
+		value: function aFunction(arg1,arg2) { return arg1 + arg2; },
+		expected:"arg1, arg2"
+	},
+	{
+		format:"{function : {format: 'b'}}",
+		value: function aFunction(arg1,arg2) { return arg1 + arg2; },
+		expected:"return arg1 + arg2;"
+	},
+	{
 		format:"{Date: {format: 'dddd, MMMM Do, YYYY'}}",
 		value: new Date("01 August 2005 17:01:01.500 UTC"),
 		expected:"Monday, August 1st, 2005"
@@ -227,7 +249,7 @@ var tests =[
 ];
 tests.forEach(function(test) {
 	result =  StringFormatter.format(test.format,test.value);
-	document.write((result===test.expected ? "passed" : "failed") + ": (StringFormatter.format('" + test.format + "'," + JSON.stringify(test.value) + ") === " + result + ")" + (result===test.expected ? " === " : " !== ") + test.expected + "<br>");
+	document.write((result===test.expected ? "passed" : "failed") + ": (StringFormatter.format('" + test.format + "'," + (typeof(test.value)!=="function" ? JSON.stringify(test.value) : test.value) + ") === " + result + ")" + (result===test.expected ? " === " : " !== ") + test.expected + "<br>");
 });
 var value = new Date("01 August 2005 17:01:01.500 UTC");
 result =  StringFormatter.format("{Date: {format: 'dddd, MMMM Do, YYYY'}} is the {Date: {format: 'do'}} day of the week and the {Date: {format: 'DDDo'}} day of the year.<br>",value,value,value);
