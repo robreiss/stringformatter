@@ -1,0 +1,28 @@
+{
+  "name": "StringFormatter JS",
+  "version":"0.0.77",
+  "description": "An extensible, garbage collecting Javascript string formatter that supports objects, currency, date/time, decimals, and more ... goes far beyond sprintf approach",
+  "main": "StringFormatter.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/anywhichway/stringformatter.git"
+  },
+  "keywords": [
+    "string",
+    "format",
+    "node.js",
+    "NodeJS"
+  ],
+  "author": "Simon Y. Blackwell <syblackwell@anywhichway.com> (http://www.github.com/anywhichway)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/anywhichway/stringformatter/issues"
+  },
+  "dependencies": {
+   
+  },
+  "homepage": "https://github.com/anywhichway/stringformatter"
+}
