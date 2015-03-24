@@ -23,7 +23,9 @@ Feel free to fork and send us pull requests. We would like to make this better f
 
 2015-03-24 Incremented version to 0.0.79. Fixed issue for formatting function names.
 
-2015-03-24 Incremented version to 0.0.80. Fixed unit tests for Date formatting in Firefox, Chrome, IE. Implemented workaround for IE not supporting name attribute on functions. 
+2015-03-24 Incremented version to 0.0.80. Fixed unit tests for Date formatting in Firefox, Chrome, IE. Implemented workaround for IE not supporting name attribute on functions.
+
+2015-03-24 Min files added for .js and test/index.min.html. March sprint complete.
 
 # license
 
