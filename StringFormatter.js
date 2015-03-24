@@ -3,9 +3,7 @@
 	// (c) 2007 Steven Levithan <stevenlevithan.com>
 	// MIT License matchRecursiveRegExp
 	// (c) 2014, 2015 Simon Y. Blackwell <syblackwell@anywhichway.com>
-	// MIT License replaceRecursiveRegExp, StringFormatter, DateFormat
-	
-	// dependencies ... moment.js
+	// MIT License replaceRecursiveRegExp, StringFormatter, DateFormat, FunctionFormat, getFunctionName
 	
 	/*** matchRecursiveRegExp
 		Accepts a string to search, a left and right format delimiter
@@ -589,7 +587,7 @@
 	StringFormatter.prototype.format = function(formatspec,vargs) {
 		var me = this;
 		var args = Array.prototype.slice.call(arguments,1);
-		// turn format spec into a string, rarely needed unless soemone if building format specs on the fly
+		// turn format spec into a string, rarely needed unless someone is building format specs on the fly
 		var stringformatter = (formatspec instanceof Object ? JSON.stringify(formatspec) : formatspec);
 		// increment overall hit count
 		me.hits++;

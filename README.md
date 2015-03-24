@@ -7,7 +7,7 @@ For questions, bugs, enhancement requests use: https://github.com/anywhichway/st
 
 Currently planned sprints are:
 
-[2015 March](https://github.com/anywhichway/stringformatter/issues?q=is%3Aopen+is%3Aissue+milestone%3A%222015+March+Sprint%22)
+[2015 March](https://github.com/anywhichway/stringformatter/issues?q=is%3Aopen+is%3Aissue+milestone%3A%222015+March+Sprint%22) - Complete
 
 [2015 April](https://github.com/anywhichway/stringformatter/issues?q=is%3Aopen+is%3Aissue+milestone%3A%222015+April+Sprint%22)
 
@@ -25,3 +25,6 @@ Feel free to fork and send us pull requests. We would like to make this better f
 
 2015-03-24 Incremented version to 0.0.80. Fixed unit tests for Date formatting in Firefox, Chrome, IE. Implemented workaround for IE not supporting name attribute on functions. 
 
+# license
+
+This software is provided as-is under the [MIT license](http://opensource.org/licenses/MIT).
