@@ -19,7 +19,9 @@ Feel free to fork and send us pull requests. We would like to make this better f
 
 2015-03-19 Corrected milestone date references in README, added package.json with version 0.0.77
 
-2015-03-19 Added function formatting, incremented version to 0.0.78. Uncovered issue with Date formatting unit tests in all but Chrome.
+2015-03-19 Incremented version to 0.0.78. Added function formatting. Uncovered issue with Date formatting unit tests in all but Chrome.
 
-2015-03-24 Added function formatting, incremented version to 0.0.79. Fixed issue for formatting function names.
+2015-03-24 Incremented version to 0.0.79. Fixed issue for formatting function names.
+
+2015-03-24 Incremented version to 0.0.80. Fixed unit tests for Date formatting in Firefox, Chrome, IE. Implemented workaround for IE not supporting name attribute on functions. 
 

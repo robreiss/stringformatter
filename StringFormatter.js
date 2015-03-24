@@ -87,6 +87,7 @@
 		return result;
 	}
 	
+	// this function works around the fact that IE does not support the name attribute of functions
 	function getFunctionName(f) {
 		var str = f+"";
 		var i = str.indexOf("function ");
@@ -177,7 +178,7 @@
 	FunctionFormat.prototype.getNameAnonymous = function() {
 		if(this.spec.indexOf("N")>=0) {
 			var name = getFunctionName(this.func);
-			return {substitute:  (name==null ||name.length===0 ? "anonymous" : this.func.name), pattern:"N"};
+			return {substitute:  (name==null ||name.length===0 ? "anonymous" : name), pattern:"N"};
 		};
 		return null;
 	}
@@ -185,7 +186,7 @@
 	FunctionFormat.prototype.getName = function() {
 		if(this.spec.indexOf("n")>=0 && this.spec.indexOf("na")===-1) {
 			var name = getFunctionName(this.func);
-			return {substitute:  (name==null ||name==="" ? "" : this.func.name), pattern:"n"};
+			return {substitute:  (name==null ||name==="" ? "" : name), pattern:"n"};
 		};
 		return null;
 	}
@@ -193,7 +194,7 @@
 	
 	function DateFormat(spec,date) {
 		this.spec = spec;
-		this.date = date;
+		this.date = new Date(date);
 	}
 	DateFormat.prototype.format = function() {
 		if(!this.spec) {
