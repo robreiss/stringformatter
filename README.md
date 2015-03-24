@@ -21,3 +21,5 @@ Feel free to fork and send us pull requests. We would like to make this better f
 
 2015-03-19 Added function formatting, incremented version to 0.0.78. Uncovered issue with Date formatting unit tests in all but Chrome.
 
+2015-03-24 Added function formatting, incremented version to 0.0.79. Fixed issue for formatting function names.
+

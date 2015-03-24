@@ -7,7 +7,7 @@ StringFormatter JS Test
 </script>
 <body>
 <span style="color:red">Some of the function formatting tests will fail in Safari since Safari converts functions to strings differently than other browsers; however, it is just
-spacing in the expected value strings and all should work fine in production code.</span>
+spacing in the expected value strings and all should work fine in production code.<br></span>
 <script>
 var format, value, expected, result;
 var tests =[
@@ -215,6 +215,26 @@ var tests =[
 		format:"{function : {format: 'b'}}",
 		value: function aFunction(arg1,arg2) { return arg1 + arg2; },
 		expected:"return arg1 + arg2;"
+	},
+	{
+		format:"{function : {format: 'v'}}",
+		value: function aFunction() { return "test result"; },
+		expected:"test result"
+	},
+	{
+		format:"{function : {format: 'n'}}",
+		value: function aFunction() { return "test result"; },
+		expected:"aFunction"
+	},
+	{
+		format:"{function : {format: 'N'}}",
+		value: function () { return "test result"; },
+		expected:"anonymous"
+	},
+	{
+		format:"{function : {format: 'n'}}",
+		value: function () { return "test result"; },
+		expected:""
 	},
 	{
 		format:"{Date: {format: 'dddd, MMMM Do, YYYY'}}",

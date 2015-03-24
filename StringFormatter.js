@@ -173,19 +173,19 @@
 		};
 		return null;
 	}
-	//{function: {format: "na"}} - returns the value of the name property of the function, the string "anonymous" is returned for no name.
+	//{function: {format: "N"}} - returns the value of the name property of the function, the string "anonymous" is returned for no name.
 	FunctionFormat.prototype.getNameAnonymous = function() {
-		if(this.spec.indexOf("na")>=0) {
-			var name = (getFunctionName(this.func)==null ? "anonymous" : this.func.name);
-			return {substitute: name, pattern:"na"};
+		if(this.spec.indexOf("N")>=0) {
+			var name = getFunctionName(this.func);
+			return {substitute:  (name==null ||name.length===0 ? "anonymous" : this.func.name), pattern:"N"};
 		};
 		return null;
 	}
 	//{function: {format: "n"}} - returns the value of the name property of the function, an empty string is returned for no name.
 	FunctionFormat.prototype.getName = function() {
-		if(this.spec.indexOf("n")>=0) {
-			var name = (getFunctionName(this.func)==null ? "" : this.func.name);
-			return {substitute: name, pattern:"n"};
+		if(this.spec.indexOf("n")>=0 && this.spec.indexOf("na")===-1) {
+			var name = getFunctionName(this.func);
+			return {substitute:  (name==null ||name==="" ? "" : this.func.name), pattern:"n"};
 		};
 		return null;
 	}
