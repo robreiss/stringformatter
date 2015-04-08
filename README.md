@@ -33,6 +33,8 @@ Feel free to fork and send us pull requests. We would like to make this better f
 
 2015-03-25 v0.0.81 NPM release
 
+2015-07-07 Updated tests, version not incremented
+
 # license
 
 This software is provided as-is under the [MIT license](http://opensource.org/licenses/MIT).

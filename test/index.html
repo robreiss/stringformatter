@@ -269,19 +269,19 @@ var tests =[
 ];
 tests.forEach(function(test) {
 	result =  StringFormatter.format(test.format,test.value);
-	document.write((result===test.expected ? "passed" : "failed") + ": (StringFormatter.format('" + test.format + "'," + (typeof(test.value)!=="function" ? JSON.stringify(test.value) : test.value) + ") === " + result + ")" + (result===test.expected ? " === " : " !== ") + test.expected + "<br>");
+	document.body.innerHTML += (result===test.expected ? "passed" : "failed") + ": (StringFormatter.format('" + test.format + "'," + (typeof(test.value)!=="function" ? JSON.stringify(test.value) : test.value) + ") === " + result + ")" + (result===test.expected ? " === " : " !== ") + test.expected + "<br>";
 });
 var value = new Date("Mon, 01 Aug 2005 17:01:01 GMT");
 result =  StringFormatter.format("{Date: {format: 'dddd, MMMM Do, YYYY'}} is the {Date: {format: 'do'}} day of the week and the {Date: {format: 'DDDo'}} day of the year.<br>",value,value,value);
-document.write(result);
+document.body.innerHTML += result;
 value = new Date();
 result = StringFormatter.format
 result = StringFormatter.format("Your local time/date is {Date: {format: 'L'}}. Your timezone offset is {Date: {format: 'ZZ'}} or {Date: {format: 'Z'}}.<br>",value,value,value);
-document.write(result);
+document.body.innerHTML += result;
 result =  StringFormatter.format("Your time/date is {Date: {format: 'T'}} or {Date: {format: 't'}}.<br>",value,value);
-document.write(result);
+document.body.innerHTML += result;
 StringFormatter.polyfill();
-document.write("Using a polyfilled String, your time/date is {Date: {format: 'T'}} or {Date: {format: 't'}}.".format(value,value));
+document.body.innerHTML += "Using a polyfilled String, your time/date is {Date: {format: 'T'}} or {Date: {format: 't'}}.".format(value,value);
 </script>
 </body>
 </head></html>
