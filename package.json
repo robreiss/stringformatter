@@ -1,6 +1,6 @@
 {
   "name": "stringformatter",
-  "version":"0.0.81",
+  "version":"0.0.82",
   "description": "An extensible, garbage collecting Javascript string formatter that supports objects, currency, date/time, decimals, and more ... goes far beyond sprintf approach",
   "main": "StringFormatter.js",
   "scripts": {

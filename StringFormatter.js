@@ -226,192 +226,240 @@
 		return str;
 	}
 	DateFormat.prototype.getMonth = function() {
+		var result;
 		var month = this.date.getMonth();
 		var months = ["January","February","March","April","May","June","July","August","September","October","November","December"];
 		if(this.spec.indexOf("MMMM")>=0) {
-			return {substitute: months[month], pattern:"MMMM"};
-		};
-		if(this.spec.indexOf("MMM")>=0) {
-			return {substitute:months[month].substring(0,3), pattern:"MMM"};
-		};
-		if(this.spec.indexOf("MM")>=0) {
-			return  {substitute:(month < 9 ? "0" + (month + 1) : ""+ (month + 1)), pattern:"MM"};
-		};
-		if(this.spec.indexOf("Mo")>=0) {
+			result = {substitute: months[month], pattern:"MMMM"};
+		} else if(this.spec.indexOf("MMM")>=0) {
+			result = {substitute:months[month].substring(0,3), pattern:"MMM"};
+		} else if(this.spec.indexOf("MM")>=0) {
+			result ={substitute:(month < 9 ? "0" + (month + 1) : ""+ (month + 1)), pattern:"MM"};
+		} else if(this.spec.indexOf("Mo")>=0) {
 			switch(month) {
-			case 0: return {substitute:"1st", pattern:"Mo"};
-			case 1: return {substitute:"2nd", pattern:"Mo"};
-			case 2: return {substitute:"3rd", pattern:"Mo"};
-			default: return {substitute:(month+1)+"th", pattern:"Mo"};
+			case 0: result = {substitute:"1st", pattern:"Mo"}; break;
+			case 1: result =  {substitute:"2nd", pattern:"Mo"};  break;
+			case 2: result =  {substitute:"3rd", pattern:"Mo"}; break;
+			default: result =  {substitute:(month+1)+"th", pattern:"Mo"}; break;
 			}
+		} else if(this.spec.indexOf("M")>=0) {
+			result = {substitute:"" + (1 + month), pattern:"M"};
 		};
-		if(this.spec.indexOf("M")>=0) {
-			return {substitute:"" + (1 + month), pattern:"M"};
-		};
-		return null;
+		if(result) {
+			this.spec = this.spec.replace(result.pattern,"@"+result.pattern);
+			result.pattern = "@"+result.pattern;
+		}
+		return result;
 	}
 	DateFormat.prototype.getQuarter = function() {
 		var month = this.date.getMonth();
 		if(this.spec.indexOf("Q")>=0) {
 			if(month<3) {
-				return {substitute:"1", pattern:"Q"};
+				result = {substitute:"1", pattern:"Q"};
+			} else if(month<6) {
+				result = {substitute:"2", pattern:"Q"};
+			} else if(month<9) {
+				result = {substitute:"3", pattern:"Q"};
+			} else {
+				result = {substitute:"4", pattern:"Q"};
 			}
-			if(month<6) {
-				return {substitute:"2", pattern:"Q"};
-			}
-			if(month<9) {
-				return {substitute:"3", pattern:"Q"};
-			}
-			return {substitute:"4", pattern:"Q"};
 		}
-		return null;
+		if(result) {
+			this.spec = this.spec.replace(result.pattern,"@"+result.pattern);
+			result.pattern = "@"+result.pattern;
+		}
+		return result;
 	}
 	DateFormat.prototype.getYear = function() {
+		var result;
 		var year = this.date.getFullYear()+"";
 		if(this.spec.indexOf("YYYY")>=0) {
-			return {substitute: year, pattern:"YYYY"};
+			result = {substitute: year, pattern:"YYYY"};
+		} else if(this.spec.indexOf("YY")>=0) {
+			result = {substitute: year.substring(2), pattern:"YY"};
 		};
-		if(this.spec.indexOf("YY")>=0) {
-			return {substitute: year.substring(2), pattern:"YY"};
-		};
-		return null;
+		if(result) {
+			this.spec = this.spec.replace(result.pattern,"@"+result.pattern);
+			result.pattern = "@"+result.pattern;
+		}
+		return result;
 	}
 	DateFormat.prototype.getDayOfYear = function() {
+		var result;
 		var dt = new Date(this.date);
 		dt.setHours(23);
 		var d = Math.round((dt - new Date(dt.getFullYear(), 0, 1, 0, 0, 0))/1000/60/60/24);
 		if(this.spec.indexOf("DDDD")>=0) {
-			return {substitute: (d<10 ? "00"+d : (d<100 ? "0"+d : ""+d)), pattern:"DDDD"};
-		};
-		if(this.spec.indexOf("DDDo")>=0) {
+			result =  {substitute: (d<10 ? "00"+d : (d<100 ? "0"+d : ""+d)), pattern:"DDDD"};
+		} else if(this.spec.indexOf("DDDo")>=0) {
 			d = d+"";
 			d = (d.lastIndexOf("1")==d.length+1 ? d+"st" : (d.lastIndexOf("2")===d.length+1 ? d+"nd" : (d.lastIndexOf("3")===d.length+1 ? d+"rd" : d+"th")));
-			return {substitute:d , pattern:"DDDo"};
+			result =  {substitute:d , pattern:"DDDo"};
+		} else if(this.spec.indexOf("DDD")>=0) {
+			result =  {substitute: ""+d, pattern:"DDD"};
 		};
-		if(this.spec.indexOf("DDD")>=0) {
-			return {substitute: ""+d, pattern:"DDD"};
-		};
-		return null;
+		if(result) {
+			this.spec = this.spec.replace(result.pattern,"@"+result.pattern);
+			result.pattern = "@"+result.pattern;
+		}
+		return result;
 	}
 	DateFormat.prototype.getDayOfMonth = function() {
+		var result;
 		var date = this.date.getDate();
 		if(this.spec.indexOf("DD")>=0) {
 			if(date<10) {
-				return {substitute:"0"+date, pattern:"DD"}
+				result =  {substitute:"0"+date, pattern:"DD"}
+			} else {
+				result =  {substitute:""+date, pattern:"DD"};
 			}
-			return {substitute:""+date, pattern:"DD"};
-		};
-		if(this.spec.indexOf("Do")>=0) {
+		} else if(this.spec.indexOf("Do")>=0) {
 			switch(date) {
-			case 1: return {substitute:"1st", pattern:"Do"};
-			case 2: return {substitute:"2nd", pattern:"Do"};
-			case 3: return {substitute:"3rd", pattern:"Do"};
-			case 21: return {substitute:"21st", pattern:"Do"};
-			case 22: return {substitute:"22nd", pattern:"Do"};
-			case 23: return {substitute:"23rd", pattern:"Do"};
-			case 31: return {substitute:"31st", pattern:"Do"};
-			default: return {substitute:(date)+"th", pattern:"Do"};
+			case 1: result = {substitute:"1st", pattern:"Do"}; break;
+			case 2: result = {substitute:"2nd", pattern:"Do"}; break;
+			case 3: result = {substitute:"3rd", pattern:"Do"}; break;
+			case 21: result = {substitute:"21st", pattern:"Do"}; break;
+			case 22: result = {substitute:"22nd", pattern:"Do"}; break;
+			case 23: result = {substitute:"23rd", pattern:"Do"}; break;
+			case 31: result = {substitute:"31st", pattern:"Do"}; break;
+			default: return {substitute:(date)+"th", pattern:"Do"}; break;
 			}
+		} else if(this.spec.indexOf("D")>=0) {
+			result =   {substitute:""+date, pattern:"D"};
 		};
-		if(this.spec.indexOf("D")>=0) {
-			return {substitute:""+date, pattern:"D"};
-		};
-		return null;
+		if(result) {
+			this.spec = this.spec.replace(result.pattern,"@"+result.pattern);
+			result.pattern = "@"+result.pattern;
+		}
+		return result;
 	}
 	DateFormat.prototype.getDayOfWeek = function() {
+		var result;
 		var day = this.date.getDay();
 		var days = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"]
 		if(this.spec.indexOf("dddd")>=0) {
-			return {substitute:days[day], pattern:"dddd"};
-		};
-		if(this.spec.indexOf("ddd")>=0) {
-			return {substitute:days[day].substring(0,3), pattern:"ddd"};
-		};
-		if(this.spec.indexOf("dd")>=0) {
-			return {substitute:days[day].substring(0,2), pattern:"dd"};
-		};
-		if(this.spec.indexOf("do")>=0) {
+			result = {substitute:days[day], pattern:"dddd"};
+		} else if(this.spec.indexOf("ddd")>=0) {
+			result = {substitute:days[day].substring(0,3), pattern:"ddd"};
+		} else if(this.spec.indexOf("dd")>=0) {
+			result = {substitute:days[day].substring(0,2), pattern:"dd"};
+		} else if(this.spec.indexOf("do")>=0) {
 			switch(day) {
-			case 0: return {substitute:"1st", pattern:"do"};
-			case 1: return {substitute:"2nd", pattern:"do"};
-			case 2: return {substitute:"3rd", pattern:"do"};
-			default: return {substitute:(day+1)+"th", pattern:"do"};
+			case 0: result = {substitute:"1st", pattern:"do"}; break;
+			case 1: result = {substitute:"2nd", pattern:"do"}; break;
+			case 2: result = {substitute:"3rd", pattern:"do"}; break;
+			default: result = {substitute:(day+1)+"th", pattern:"do"};
 			}
-		};
-		if(this.spec.indexOf("d")>=0) {
-			return {substitute:""+day, pattern:"d"};
-		};
-		return null;
+		} else if(this.spec.indexOf("d")>=0) {
+			result = {substitute:""+day, pattern:"d"};
+		}
+		if(result) {
+			this.spec = this.spec.replace(result.pattern,"@"+result.pattern);
+			result.pattern = "@"+result.pattern;
+		}
+		return result;
 	}
 	DateFormat.prototype.getHours = function() {
 		var h = this.date.getHours();
 		if(this.spec.indexOf("HH")>=0) {
-			return {substitute: (h<10 ? "0"+h : ""+h), pattern:"HH"};
-		};
-		if(this.spec.indexOf("H")>=0) {
-			return {substitute: ""+h, pattern:"H"};
-		};
-		h = (h==0 ? 12 : h);
-		h = (h>12 ? h-12 : h);
-		if(this.spec.indexOf("hh")>=0) {
-			return {substitute: (h<10 ? "0"+h : ""+h), pattern:"hh"};
-		};
-		if(this.spec.indexOf("h")>=0) {
-			return {substitute: ""+h, pattern:"h"};
-		};
-		return null;
+			result = {substitute: (h<10 ? "0"+h : ""+h), pattern:"HH"};
+		} else if(this.spec.indexOf("H")>=0) {
+			result = {substitute: ""+h, pattern:"H"};
+		} else {
+			h = (h==0 ? 12 : h);
+			h = (h>12 ? h-12 : h);
+			if(this.spec.indexOf("hh")>=0) {
+				result = {substitute: (h<10 ? "0"+h : ""+h), pattern:"hh"};
+			} else if(this.spec.indexOf("h")>=0) {
+				result = {substitute: ""+h, pattern:"h"};
+			}
+		}
+		if(result) {
+			this.spec = this.spec.replace(result.pattern,"@"+result.pattern);
+			result.pattern = "@"+result.pattern;
+		}
+		return result;
 	}
 	DateFormat.prototype.getAMPM = function() {
+		var result;
 		var h = this.date.getHours();
 		if(this.spec.indexOf("A")>=0) {
-			return {substitute: (h>11 ? "PM" : "AM"), pattern:"A"};
-		};
-		if(this.spec.indexOf("a")>=0) {
-			return {substitute: (h>11 ? "pm" : "am"), pattern:"a"};
-		};
-		return null;
+			result = {substitute: (h>11 ? "PM" : "AM"), pattern:"A"};
+		} else if(this.spec.indexOf("a")>=0) {
+			result = {substitute: (h>11 ? "pm" : "am"), pattern:"a"};
+		}
+		if(result) {
+			this.spec = this.spec.replace(result.pattern,"@"+result.pattern);
+			result.pattern = "@"+result.pattern;
+		}
+		return result;
 	}
 	DateFormat.prototype.getMinutes = function() {
+		var result;
 		var minutes = this.date.getMinutes();
 		if(this.spec.indexOf("mm")>=0) {
-			return {substitute: (minutes<10 ? "0"+minutes : minutes+""), pattern:"mm"};
-		};
-		if(this.spec.indexOf("m")>=0) {
-			return {substitute: minutes+"", pattern:"m"};
-		};
-		return null;
+			result = {substitute: (minutes<10 ? "0"+minutes : minutes+""), pattern:"mm"};
+		} else if(this.spec.indexOf("m")>=0) {
+			result = {substitute: minutes+"", pattern:"m"};
+		}
+		if(result) {
+			this.spec = this.spec.replace(result.pattern,"@"+result.pattern);
+			result.pattern = "@"+result.pattern;
+		}
+		return result;
 	}
 	DateFormat.prototype.getSeconds = function() {
+		var result;
 		var seconds = this.date.getSeconds();
 		if(this.spec.indexOf("ss")>=0) {
-			return {substitute: (seconds<10 ? "0"+seconds : seconds+""), pattern:"ss"};
-		};
-		if(this.spec.indexOf("s")>=0) {
-			return {substitute: seconds+"", pattern:"s"};
-		};
-		return null;
+			result = {substitute: (seconds<10 ? "0"+seconds : seconds+""), pattern:"ss"};
+		} else if(this.spec.indexOf("s")>=0) {
+			result = {substitute: seconds+"", pattern:"s"};
+		}
+		if(result) {
+			this.spec = this.spec.replace(result.pattern,"@"+result.pattern);
+			result.pattern = "@"+result.pattern;
+		}
+		return result;
 	}
 	DateFormat.prototype.getMilliseconds = function() {
+		/* http://stackoverflow.com/questions/2686855/is-there-a-javascript-function-that-can-pad-a-string-to-get-to-a-determined-leng
+		 * answered Jan 25 '14 at 9:45
+		 * cocco
+		 */
+		function pad(a,b,c,d) { //string/number,length=2,char=0,0/false=Left-1/true=Right
+			 return a=(a||c||0)+'',b=new Array((++b||3)-a.length).join(c||0),d?a+b:b+a
+		}
+		var result;
 		var ms = this.date.getMilliseconds()+"";
+		ms = pad(ms,3,"0");
 		if(this.spec.indexOf("SSS")>=0) {
-			return {substitute: ms, pattern:"SSS"};
-		};
-		if(this.spec.indexOf("SS")>=0) {
-			return {substitute: ms.substring(0,2), pattern:"SS"};
-		};
-		if(this.spec.indexOf("S")>=0) {
-			return {substitute: ms.substring(0,1), pattern:"S"};
-		};
-		return null;
+			result = {substitute: ms, pattern:"SSS"};
+		} else if(this.spec.indexOf("SS")>=0) {
+			result = {substitute: ms.substring(0,2), pattern:"SS"};
+		} else if(this.spec.indexOf("S")>=0) {
+			result = {substitute: ms.substring(0,1), pattern:"S"};
+		}
+		if(result) {
+			this.spec = this.spec.replace(result.pattern,"@"+result.pattern);
+			result.pattern = "@"+result.pattern;
+		}
+		return result;
 	}
 	DateFormat.prototype.getTime = function() {
+		var result;
 		var t = this.date.getTime()+"";
 		if(this.spec.indexOf("X")>=0) {
-			return {substitute: t, pattern:"X"};
-		};
-		return null;
+			result = {substitute: t, pattern:"X"};
+		}
+		if(result) {
+			this.spec = this.spec.replace(result.pattern,"@"+result.pattern);
+			result.pattern = "@"+result.pattern;
+		}
+		return result;
 	}
 	DateFormat.prototype.getTimezoneOffset = function() {
+		var result;
 		var os = this.date.getTimezoneOffset();
 		var isneg = (os < 0 ? true : false);
 		var ho = Math.abs(os/60);
@@ -421,45 +469,76 @@
 		var min = Math.abs(os % 60);
 		min = (min<10 ? "0"+min : min+"");
 		if(this.spec.indexOf("ZZ")>=0) {
-			return {substitute: hr+":"+min, pattern:"ZZ"};
-		};
-		if(this.spec.indexOf("Z")>=0) {
-			return {substitute:  hr+min, pattern:"Z"};
-		};
-		return null;
+			result = {substitute: hr+":"+min, pattern:"ZZ"};
+		} else if(this.spec.indexOf("Z")>=0) {
+			result = {substitute:  hr+min, pattern:"Z"};
+		}
+		if(result) {
+			this.spec = this.spec.replace(result.pattern,"@"+result.pattern);
+			result.pattern = "@"+result.pattern;
+		}
+		return result;
 	}
 	DateFormat.prototype.toUTCString = function() {
+		var result;
 		if(this.spec.indexOf("U")>=0) {
-			return {substitute: this.date.toUTCString().replace("GMT","UTC"), pattern:"U"};
-		};
-		return null;
+			result = {substitute: this.date.toUTCString().replace("GMT","UTC"), pattern:"U"};
+		}
+		if(result) {
+			this.spec = this.spec.replace(result.pattern,"@"+result.pattern);
+			result.pattern = "@"+result.pattern;
+		}
+		if(result) {
+			this.spec = this.spec.replace(result.pattern,"@"+result.pattern);
+			result.pattern = "@"+result.pattern;
+		}
+		return result;
 	}
 	DateFormat.prototype.toGMTString = function() {
+		var result;
 		if(this.spec.indexOf("G")>=0) {
-			return {substitute: this.date.toUTCString().replace("UTC","GMT"), pattern:"G"};
+			result = {substitute: this.date.toUTCString().replace("UTC","GMT"), pattern:"G"};
 		};
-		return null;
+		if(result) {
+			this.spec = this.spec.replace(result.pattern,"@"+result.pattern);
+			result.pattern = "@"+result.pattern;
+		}
+		return result;
 	}
 	DateFormat.prototype.toISOString = function() {
+		var result;
 		if(this.spec.indexOf("I")>=0) {
-			return {substitute: this.date.toISOString(), pattern:"I"};
+			result = {substitute: this.date.toISOString(), pattern:"I"};
 		};
-		return null;
+		if(result) {
+			this.spec = this.spec.replace(result.pattern,"@"+result.pattern);
+			result.pattern = "@"+result.pattern;
+		}
+		return result;
 	}
 	DateFormat.prototype.toLocaleString = function() {
+		var result;
 		if(this.spec.indexOf("L")>=0) {
-			return {substitute: this.date.toLocaleString(), pattern:"L"};
+			result = {substitute: this.date.toLocaleString(), pattern:"L"};
 		};
-		return null;
+		if(result) {
+			this.spec = this.spec.replace(result.pattern,"@"+result.pattern);
+			result.pattern = "@"+result.pattern;
+		}
+		return result;
 	}
 	DateFormat.prototype.toTimeString = function() {
+		var result;
 		if(this.spec.indexOf("T")>=0) {
-			return {substitute: this.date.toTimeString(), pattern:"T"};
+			result = {substitute: this.date.toTimeString(), pattern:"T"};
+		} else if(this.spec.indexOf("t")>=0) {
+			result = {substitute: this.date.toLocaleTimeString(), pattern:"t"};
 		};
-		if(this.spec.indexOf("t")>=0) {
-			return {substitute: this.date.toLocaleTimeString(), pattern:"t"};
-		};
-		return null;
+		if(result) {
+			this.spec = this.spec.replace(result.pattern,"@"+result.pattern);
+			result.pattern = "@"+result.pattern;
+		}
+		return result;
 	}
 	function StringFormatter() {
 		var me = this;

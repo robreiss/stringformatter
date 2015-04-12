@@ -244,7 +244,7 @@ var tests =[
 	{
 		format:"{Date: {format: 'YYYY MM DD hh:mm:ss:SSS A'}}",
 		value: new Date("Mon, 01 Aug 2005 17:01:01 GMT"),
-		expected:"2005 08 01 01:01:01:0 PM"
+		expected:"2005 08 01 01:01:01:000 PM"
 	},
 	{
 		format:"{Date: {format: 'U'}}",
@@ -265,6 +265,16 @@ var tests =[
 		format:"{Date: {format: 'L'}}",
 		value: new Date("Mon, 01 Aug 2005 17:01:01 GMT"),
 		expected:"8/1/2005, 1:01:01 PM"
+	},
+	{ // test fix for Bug #11
+		format: "{Date: {format: 'DD-MMM-YYYY hh:mm:ss:SSS A'}}",
+		value: new Date('2015-04-12 00:12:23'),
+		expected:"12-Apr-2015 12:12:23:000 AM"
+	},
+	{ // test fix for Bug #12
+		format: "{Date: {format: 'DD-MMM-YYYY hh:mm:ss:SS A'}}",
+		value: new Date('2015-04-12 00:12:23:020'),
+		expected:"12-Apr-2015 12:12:23:02 AM"
 	}
 ];
 tests.forEach(function(test) {

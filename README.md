@@ -33,7 +33,9 @@ Feel free to fork and send us pull requests. We would like to make this better f
 
 2015-03-25 v0.0.81 NPM release
 
-2015-07-07 Updated tests, version not incremented
+2015-04-07 Updated tests, version not incremented
+
+2015-04-12 v0.0.82 Fixed issue #11 and #12. This also addressed a number of other potential issues with ambiguous date formatting during final value substitution due to the large variance of characters in month names.
 
 # license
 
