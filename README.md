@@ -17,9 +17,11 @@ Currently planned sprints are:
 
 Feel free to fork and send us pull requests. We would like to make this better for everyone.
 
+[![Codacy Badge](https://www.codacy.com/project/badge/32b908f2ffe14d0b938b8eb36b1ca30e)](https://www.codacy.com/app/app39368497/stringformatter)
+
 # updates (reverse chronological order)
 
-2015-07-26 v0.0.83 Fixed code style, complexity, and orphan issues based on Codacy analysis. Changed this update list to reverse chronlogical order. No functional changes.
+2015-07-26 v0.0.83 Fixed code style, complexity, and orphan issues based on Codacy analysis. Changed this update list to reverse chronlogical order. Added Codacy badge. No functional changes.
 
 2015-04-12 v0.0.82 Fixed issue #11 and #12. This also addressed a number of other potential issues with ambiguous date formatting during final value substitution due to the large variance of characters in month names.
 
