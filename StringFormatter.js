@@ -42,11 +42,15 @@
 			t = 0;
 			while (m = x.exec(str)) {
 				if (l.test(m[0])) {
-					if (!t++) s = x.lastIndex;
+					if (!t++) {
+						s = x.lastIndex;
+					}
 				} else if (t) {
 					if (!--t) {
 						a.push(str.slice(s, m.index));
-						if (!g) return a;
+						if (!g) {
+							return a;
+						}
 					}
 				}
 			}
@@ -61,7 +65,6 @@
 			g = f.indexOf("g") > -1,
 			x = new RegExp(left + "|" + right, (!g ? "g" :"") + f),
 			l = new RegExp(left, f.replace(/g/g, "")),
-			a = [],
 			result = str.slice(),
 			open = (keepdelim ? "" : left.replace("\\","")),
 			close = (keepdelim ? "" : right.replace("\\","")),
@@ -71,12 +74,16 @@
 			t = 0;
 			while (m = x.exec(str)) {
 				if (l.test(m[0])) {
-					if (!t++) s = x.lastIndex;
+					if (!t++) {
+						s = x.lastIndex;
+					}
 				} else if (t) {
 					if (!--t) {
 						r = str.slice(s, m.index);
 						result = result.replace(open+r+close,subst);
-						if (!g) return result;
+						if (!g) {
+							return result;
+						}
 					}
 				}
 			}
@@ -293,7 +300,7 @@
 			result =  {substitute: (d<10 ? "00"+d : (d<100 ? "0"+d : ""+d)), pattern:"DDDD"};
 		} else if(this.spec.indexOf("DDDo")>=0) {
 			d = d+"";
-			d = (d.lastIndexOf("1")==d.length+1 ? d+"st" : (d.lastIndexOf("2")===d.length+1 ? d+"nd" : (d.lastIndexOf("3")===d.length+1 ? d+"rd" : d+"th")));
+			d = (d.lastIndexOf("1")===d.length+1 ? d+"st" : (d.lastIndexOf("2")===d.length+1 ? d+"nd" : (d.lastIndexOf("3")===d.length+1 ? d+"rd" : d+"th")));
 			result =  {substitute:d , pattern:"DDDo"};
 		} else if(this.spec.indexOf("DDD")>=0) {
 			result =  {substitute: ""+d, pattern:"DDD"};
@@ -334,8 +341,7 @@
 		return result;
 	}
 	DateFormat.prototype.getDayOfWeek = function() {
-		var result;
-		var day = this.date.getDay();
+		var result, day = this.date.getDay();
 		var days = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"]
 		if(this.spec.indexOf("dddd")>=0) {
 			result = {substitute:days[day], pattern:"dddd"};
@@ -360,13 +366,13 @@
 		return result;
 	}
 	DateFormat.prototype.getHours = function() {
-		var h = this.date.getHours();
+		var result, h = this.date.getHours();
 		if(this.spec.indexOf("HH")>=0) {
 			result = {substitute: (h<10 ? "0"+h : ""+h), pattern:"HH"};
 		} else if(this.spec.indexOf("H")>=0) {
 			result = {substitute: ""+h, pattern:"H"};
 		} else {
-			h = (h==0 ? 12 : h);
+			h = (h===0 ? 12 : h);
 			h = (h>12 ? h-12 : h);
 			if(this.spec.indexOf("hh")>=0) {
 				result = {substitute: (h<10 ? "0"+h : ""+h), pattern:"hh"};
@@ -542,12 +548,12 @@
 	}
 	function StringFormatter() {
 		var me = this;
-		this.cache = {}; // cache for format strings
-		this.gcOn = true;
-		this.hits = 0; // number of times format has been called
-		this.gcThreshold = 1000; // point at which hits results in an attempt to garbage collect
-		this.gcPurgeLessThan = 1; // if the use of a string is less than this, then purge from cache during garbage collection
-		this.formats = { // storage for functions that actually do the string manipulation for formatting
+		me.cache = {}; // cache for format strings
+		me.gcOn = true;
+		me.hits = 0; // number of times format has been called
+		me.gcThreshold = 1000; // point at which hits results in an attempt to garbage collect
+		me.gcPurgeLessThan = 1; // if the use of a string is less than this, then purge from cache during garbage collection
+		me.formats = { // storage for functions that actually do the string manipulation for formatting
 				string : function(spec,value) {
 					var result = value+"";
 					var padding = "";
@@ -561,11 +567,10 @@
 					return result;
 				},
 				number: function(spec,value) {
-					var result = parseFloat(value);
-					if(result+""=="NaN") {
+					var result = parseFloat(value), padding = "";
+					if(result+""==="NaN") {
 						return (spec["ifNaN"]!=null ? spec["ifNaN"] : result);
-					}
-					if(result===Infinity || result===-Infinity) {
+					} else if(result===Infinity || result===-Infinity) {
 						return (spec["ifInfinity"]!=null ? spec["ifInfinity"] : result);
 					}
 					if(spec.precision!=null) {
@@ -575,8 +580,7 @@
 						result = parseFloat(result).toFixed(spec.fixed);
 					}
 					if(spec.as) {
-						var as = spec.as[0];
-						switch(as) {
+						switch(spec.as[0]) {
 							case "%": {
 								result = result + "%"; break;
 							}
@@ -594,7 +598,6 @@
 							}
 						}
 					}
-					var padding = "";
 					if(spec.width) {
 						 var str = result+"";
 						 var padlen = str.length-(spec.sign ? spec.sign.length : 0);
@@ -612,7 +615,7 @@
 					return result;
 				},
 				boolean: function(spec,value) {
-					var result = value;
+					var result = value, padding="", padlen;
 					switch(spec.as) {
 						case "string": {
 							result = (value ? "yes" : "no");
@@ -626,19 +629,17 @@
 							result = (value ? true : false);
 						}
 					}
-					var padding = "";
 					if(spec.width) {
-						 var padlen = spec.padding - result.length;
+						 padlen = spec.padding - result.length;
 						 if(padlen>0) {
 							 padding = (spec.padding ? spec.padding : "").repeat(padlen);
 						 }
 					}
-					result = padding+result;
-					return result;
+					return padding+result;
 				}
 			}
-		this.formats.object = this.formats.Object;
-		this.formats["function"] = this.formats.Function;
+		me.formats.object = me.formats.Object;
+		me.formats["function"] = me.formats.Function;
 	}
 	/* Loop through cache and delete items that have a low utilization */
 	StringFormatter.prototype.gc = function() {
@@ -663,7 +664,7 @@
 			return result.substring(1,result.length-2);
 		}
 	}
-	StringFormatter.prototype.format = function(formatspec,vargs) {
+	StringFormatter.prototype.format = function(formatspec /*,vargs*/) {
 		var me = this;
 		var args = Array.prototype.slice.call(arguments,1);
 		// turn format spec into a string, rarely needed unless someone is building format specs on the fly
@@ -702,7 +703,7 @@
 		// increment the hit count for the specific formatter
 		formatter.hits++;
 		var results = [];
-		var args = arguments;
+		args = arguments;
 		// loop through statics
 		formatter.statics.forEach(function(str,i) {
 			results.push(str); // push them onto the result
@@ -850,4 +851,4 @@
 	exports.StringFormatter.register(Date,dateFormatter,"Date");
 	exports.StringFormatter.register(Function,functionFormatter,"Function");
 	exports.StringFormatter.register(Function,functionFormatter,"function");
-})("undefined"!=typeof exports&&"undefined"!=typeof global?global:window);
+})("undefined"!==typeof exports&&"undefined"!==typeof global?global:window);
