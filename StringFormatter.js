@@ -39,8 +39,8 @@
 			t, s, m;
 	
 		do {
-			t = 0;
-			while (m = x.exec(str)) {
+			t = 0, m = x.exec(str);
+			while (m) {
 				if (l.test(m[0])) {
 					if (!t++) {
 						s = x.lastIndex;
@@ -53,6 +53,7 @@
 						}
 					}
 				}
+				m = x.exec(str);
 			}
 		} while (t && (x.lastIndex = s));
 	
@@ -71,8 +72,8 @@
 			t, s, m, r;
 	
 		do {
-			t = 0;
-			while (m = x.exec(str)) {
+			t = 0, m = x.exec(str);
+			while (m) {
 				if (l.test(m[0])) {
 					if (!t++) {
 						s = x.lastIndex;
@@ -86,6 +87,7 @@
 						}
 					}
 				}
+				m = x.exec(str);
 			}
 		} while (t && (x.lastIndex = s));
 	
@@ -259,7 +261,7 @@
 		return result;
 	}
 	DateFormat.prototype.getQuarter = function() {
-		var month = this.date.getMonth();
+		var month = this.date.getMonth(), result;
 		if(this.spec.indexOf("Q")>=0) {
 			if(month<3) {
 				result = {substitute:"1", pattern:"Q"};
@@ -651,7 +653,7 @@
 	}
 	/* Register a formatter */
 	StringFormatter.prototype.register = function(constructor,formatter,name) {
-		name || (name = constructor.name);
+		name = (name ? name : constructor.name);
 		this.formats[name] = (formatter ? formatter : constructor.prototype.StringFormatter);
 	}
 	/* Patch the global String object so it supports format */

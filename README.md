@@ -19,6 +19,8 @@ Feel free to fork and send us pull requests. We would like to make this better f
 
 [![Codacy Badge](https://www.codacy.com/project/badge/32b908f2ffe14d0b938b8eb36b1ca30e)](https://www.codacy.com/app/app39368497/stringformatter)
 
+The primary factor bringing down the grade for this code is cyclomatic complexity due to a large number of switch and if/else if/else statements that seem to be unavoidable when dealing with the broad range of formatting options this library provides.
+
 # updates (reverse chronological order)
 
 2015-07-26 v0.0.83 Fixed code style, complexity, and orphan issues based on Codacy analysis. Changed this update list to reverse chronlogical order. Added Codacy badge. No functional changes.
