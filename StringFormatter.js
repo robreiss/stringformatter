@@ -39,7 +39,8 @@
 			t, s, m;
 	
 		do {
-			t = 0, m = x.exec(str);
+			t = 0;
+			m = x.exec(str);
 			while (m) {
 				if (l.test(m[0])) {
 					if (!t++) {
@@ -616,7 +617,7 @@
 					result = (spec.accounting && value<0 ? "(" + (result+"").replace("-","") + ")" : result);
 					return result;
 				},
-				boolean: function(spec,value) {
+				"boolean": function(spec,value) {
 					var result = value, padding="", padlen;
 					switch(spec.as) {
 						case "string": {

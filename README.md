@@ -9,19 +9,15 @@ npm install stringformatter
 
 also works in a browser
 
-Currently planned sprints are:
-
-[2015 March](https://github.com/anywhichway/stringformatter/issues?q=is%3Aopen+is%3Aissue+milestone%3A%222015+March+Sprint%22) - Complete
-
-[2015 April](https://github.com/anywhichway/stringformatter/issues?q=is%3Aopen+is%3Aissue+milestone%3A%222015+April+Sprint%22)
-
 Feel free to fork and send us pull requests. We would like to make this better for everyone.
 
-[![Codacy Badge](https://www.codacy.com/project/badge/32b908f2ffe14d0b938b8eb36b1ca30e)](https://www.codacy.com/app/app39368497/stringformatter)
+[![Codacy Badge](https://api.codacy.com/project/badge/grade/ef215dac1bdd4df8943a26fca043b9c1)](https://www.codacy.com/app/syblackwell/stringformatter)
 
 The primary factor bringing down the grade for this code is cyclomatic complexity due to a large number of switch and if/else if/else statements that seem to be unavoidable when dealing with the broad range of formatting options this library provides.
 
 # updates (reverse chronological order)
+
+2015-07-26 v0.1.00 Fixed minor code style issue. The code has been in the wild for several months an has over 100 stars, so we have made this the official 1.0 version.
 
 2015-07-26 v0.0.83 Fixed code style, complexity, and orphan issues based on Codacy analysis. Changed this update list to reverse chronlogical order. Added Codacy badge. No functional changes.
 

@@ -277,8 +277,14 @@ var tests =[
 		expected:"12-Apr-2015 12:12:23:02 AM"
 	}
 ];
+var passed = 0, failed = 0;
 tests.forEach(function(test) {
 	result =  StringFormatter.format(test.format,test.value);
+	if(result===test.expected) {
+		passed++;
+	} else {
+		failed++;
+	}
 	document.body.innerHTML += (result===test.expected ? "passed" : "failed") + ": (StringFormatter.format('" + test.format + "'," + (typeof(test.value)!=="function" ? JSON.stringify(test.value) : test.value) + ") === " + result + ")" + (result===test.expected ? " === " : " !== ") + test.expected + "<br>";
 });
 var value = new Date("Mon, 01 Aug 2005 17:01:01 GMT");
@@ -292,6 +298,7 @@ result =  StringFormatter.format("Your time/date is {Date: {format: 'T'}} or {Da
 document.body.innerHTML += result;
 StringFormatter.polyfill();
 document.body.innerHTML += "Using a polyfilled String, your time/date is {Date: {format: 'T'}} or {Date: {format: 't'}}.".format(value,value);
+document.body.innerHTML += "<br>Passed: " + passed + " Failed: " + failed;
 </script>
 </body>
 </head></html>
