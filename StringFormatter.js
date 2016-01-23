@@ -73,7 +73,7 @@
 			t, s, m, r;
 	
 		do {
-			t = 0, m = x.exec(str);
+			t = 0; m = x.exec(str);
 			while (m) {
 				if (l.test(m[0])) {
 					if (!t++) {
@@ -139,7 +139,7 @@
 	FunctionFormat.prototype.getValue = function() {
 		if(this.spec.indexOf("v")>=0) {
 			return {substitute: this.func(), pattern:"v"};
-		};
+		}
 		return null;
 	}
 	//{function: {format: "h"}} - returns the head of the function definition, i.e. its name and argument signature with parentheses.
@@ -148,7 +148,7 @@
 			var fstr = this.func+"";
 			var end = fstr.indexOf(" {");
 			return {substitute: fstr.substring(0,end), pattern:"h"};
-		};
+		}
 		return null;
 	}
 	//{function: {format: "a"}} - returns the comma separated arguments of the function definition without parentheses.
@@ -172,30 +172,30 @@
 			var start = fstr.indexOf("{");
 			var end = fstr.lastIndexOf("}");
 			return {substitute: fstr.substring(start+2,end-1), pattern:"b"};
-		};
+		}
 		return null;
 	}
 	//{function: {format: "l"}} - returns the value of the length property of the function, i.e. arity.
 	FunctionFormat.prototype.getLength = function() {
 		if(this.spec.indexOf("l")>=0) {
 			return {substitute: this.func.length, pattern:"l"};
-		};
+		}
 		return null;
 	}
 	//{function: {format: "N"}} - returns the value of the name property of the function, the string "anonymous" is returned for no name.
 	FunctionFormat.prototype.getNameAnonymous = function() {
 		if(this.spec.indexOf("N")>=0) {
 			var name = getFunctionName(this.func);
-			return {substitute:  (name==null ||name.length===0 ? "anonymous" : name), pattern:"N"};
-		};
+			return {substitute:  (name===null || name===undefined ||name.length===0 ? "anonymous" : name), pattern:"N"};
+		}
 		return null;
 	}
 	//{function: {format: "n"}} - returns the value of the name property of the function, an empty string is returned for no name.
 	FunctionFormat.prototype.getName = function() {
 		if(this.spec.indexOf("n")>=0 && this.spec.indexOf("na")===-1) {
 			var name = getFunctionName(this.func);
-			return {substitute:  (name==null ||name==="" ? "" : name), pattern:"n"};
-		};
+			return {substitute:  (name===null || name===undefined || name==="" ? "" : name), pattern:"n"};
+		}
 		return null;
 	}
 
@@ -254,7 +254,7 @@
 			}
 		} else if(this.spec.indexOf("M")>=0) {
 			result = {substitute:"" + (1 + month), pattern:"M"};
-		};
+		}
 		if(result) {
 			this.spec = this.spec.replace(result.pattern,"@"+result.pattern);
 			result.pattern = "@"+result.pattern;
@@ -287,7 +287,7 @@
 			result = {substitute: year, pattern:"YYYY"};
 		} else if(this.spec.indexOf("YY")>=0) {
 			result = {substitute: year.substring(2), pattern:"YY"};
-		};
+		}
 		if(result) {
 			this.spec = this.spec.replace(result.pattern,"@"+result.pattern);
 			result.pattern = "@"+result.pattern;
@@ -307,7 +307,7 @@
 			result =  {substitute:d , pattern:"DDDo"};
 		} else if(this.spec.indexOf("DDD")>=0) {
 			result =  {substitute: ""+d, pattern:"DDD"};
-		};
+		}
 		if(result) {
 			this.spec = this.spec.replace(result.pattern,"@"+result.pattern);
 			result.pattern = "@"+result.pattern;
@@ -336,7 +336,7 @@
 			}
 		} else if(this.spec.indexOf("D")>=0) {
 			result =   {substitute:""+date, pattern:"D"};
-		};
+		}
 		if(result) {
 			this.spec = this.spec.replace(result.pattern,"@"+result.pattern);
 			result.pattern = "@"+result.pattern;
@@ -507,7 +507,7 @@
 		var result;
 		if(this.spec.indexOf("G")>=0) {
 			result = {substitute: this.date.toUTCString().replace("UTC","GMT"), pattern:"G"};
-		};
+		}
 		if(result) {
 			this.spec = this.spec.replace(result.pattern,"@"+result.pattern);
 			result.pattern = "@"+result.pattern;
@@ -518,7 +518,7 @@
 		var result;
 		if(this.spec.indexOf("I")>=0) {
 			result = {substitute: this.date.toISOString(), pattern:"I"};
-		};
+		}
 		if(result) {
 			this.spec = this.spec.replace(result.pattern,"@"+result.pattern);
 			result.pattern = "@"+result.pattern;
@@ -572,14 +572,14 @@
 				number: function(spec,value) {
 					var result = parseFloat(value), padding = "";
 					if(result+""==="NaN") {
-						return (spec["ifNaN"]!=null ? spec["ifNaN"] : result);
+						return (spec["ifNaN"]!==null && spec["ifNaN"]!==undefined ? spec["ifNaN"] : result);
 					} else if(result===Infinity || result===-Infinity) {
-						return (spec["ifInfinity"]!=null ? spec["ifInfinity"] : result);
+						return (spec["ifInfinity"]!==null && spec["ifInfinity"]!==undefined ? spec["ifInfinity"] : result);
 					}
-					if(spec.precision!=null) {
+					if(spec.precision!==null && spec.precision!==undefined) {
 						result = result.toPrecision(spec.precision);
 					}
-					if(spec.fixed!=null) {
+					if(spec.fixed!=null && spec.fixed!==undefined) {
 						result = parseFloat(result).toFixed(spec.fixed);
 					}
 					if(spec.as) {
