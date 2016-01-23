@@ -7,7 +7,10 @@ For questions, bugs, enhancement requests use: https://github.com/anywhichway/st
 
 npm install stringformatter
 
-also works in a browser
+The index.js and package.json files are compatible with https://github.com/anywhichway/stringformatter so that stringformatter can be served directly to the browser from the node-modules/stringformatter directory when using node Express.
+
+Browser code can also be found in the browser directory at https://github.com/anywhichway/stringformatter.
+
 
 Feel free to fork and send us pull requests. We would like to make this better for everyone.
 
@@ -20,7 +23,13 @@ Feel free to fork and send us pull requests. We would like to make this better f
 
 The primary factor bringing down the grade for this code is cyclomatic complexity due to a large number of switch and if/else if/else statements that seem to be unavoidable when dealing with the broad range of formatting options this library provides.
 
-# updates (reverse chronological order)
+# Building & Testing
+
+Building & testing is conducted using Travis, Mocha, Chai, and Istanbul.
+
+# Updates (reverse chronological order)
+
+2015-07-26 v0.1.1 Fixed code style issues identified by codeclimate. Converted to Mocha unit tests. Added browserify packaging.
 
 2015-07-26 v0.1.00 Fixed minor code style issue. The code has been in the wild for several months an has over 100 stars, so we have made this the official 1.0 version.
 

@@ -1,10 +1,12 @@
 {
   "name": "stringformatter",
-  "version": "0.1.00",
+  "version": "0.1.1",
   "description": "An extensible, garbage collecting Javascript string formatter that supports objects, currency, date/time, decimals, and more ... goes far beyond sprintf approach",
-  "main": "StringFormatter.js",
+  "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "istanbul cover node_modules/mocha/bin/_mocha --report lcov -- -R spec",
+    "browserify": "browserify index.js -o browser/StringFormatter.js",
+    "minify": "minify browser/StringFormatter.js"
   },
   "repository": {
     "type": "git",
