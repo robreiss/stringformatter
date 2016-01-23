@@ -1,6 +1,6 @@
 {
   "name": "stringformatter",
-  "version":"0.1.00",
+  "version": "0.1.00",
   "description": "An extensible, garbage collecting Javascript string formatter that supports objects, currency, date/time, decimals, and more ... goes far beyond sprintf approach",
   "main": "StringFormatter.js",
   "scripts": {
@@ -21,8 +21,12 @@
   "bugs": {
     "url": "https://github.com/anywhichway/stringformatter/issues"
   },
-  "dependencies": {
-   
-  },
-  "homepage": "https://github.com/anywhichway/stringformatter"
+  "dependencies": {},
+  "homepage": "https://github.com/anywhichway/stringformatter",
+  "devDependencies": {
+    "chai": "^3.4.1",
+    "codeclimate-test-reporter": "^0.3.0",
+    "istanbul": "^0.4.1",
+    "mocha": "^2.3.4"
+  }
 }

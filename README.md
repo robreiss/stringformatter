@@ -12,6 +12,11 @@ also works in a browser
 Feel free to fork and send us pull requests. We would like to make this better for everyone.
 
 [![Codacy Badge](https://api.codacy.com/project/badge/grade/ef215dac1bdd4df8943a26fca043b9c1)](https://www.codacy.com/app/syblackwell/stringformatter)
+[![Code Climate](https://codeclimate.com/github/anywhichway/stringformatter/badges/gpa.svg)](https://codeclimate.com/github/anywhichway/stringformatter)
+[![Test Coverage](https://codeclimate.com/github/anywhichway/stringformatter/badges/coverage.svg)](https://codeclimate.com/github/anywhichway/stringformatter/coverage)
+[![Issue Count](https://codeclimate.com/github/anywhichway/stringformatter/badges/issue_count.svg)](https://codeclimate.com/github/anywhichway/stringformatter)
+
+[![NPM](https://nodei.co/npm/stringformatter.png?downloads=true&downloadRank=true&stars=true)](https://nodei.co/npm/<stringformatter>/)
 
 The primary factor bringing down the grade for this code is cyclomatic complexity due to a large number of switch and if/else if/else statements that seem to be unavoidable when dealing with the broad range of formatting options this library provides.
 
