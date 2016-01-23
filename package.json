@@ -5,8 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "istanbul cover node_modules/mocha/bin/_mocha --report lcov -- -R spec",
-    "browserify": "browserify index.js -o browser/StringFormatter.js",
-    "minify": "minify browser/StringFormatter.js"
+    "browserify": "browserify index.js -o browser/stringformatter.js",
+    "minify": "minify browser/stringformatter.js"
   },
   "repository": {
     "type": "git",

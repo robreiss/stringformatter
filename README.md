@@ -27,9 +27,13 @@ The primary factor bringing down the grade for this code is cyclomatic complexit
 
 Building & testing is conducted using Travis, Mocha, Chai, and Istanbul.
 
+# Notes
+
+There seem to be some inconsistencies between Windows and Linux. All unit tests pass on Windows, but several fail on Linux.
+
 # Updates (reverse chronological order)
 
-2015-07-26 v0.1.1 Fixed code style issues identified by codeclimate. Converted to Mocha unit tests. Added browserify packaging.
+2015-07-26 v0.1.1 Fixed code style issues identified by codeclimate. Converted to Mocha unit tests. Added browserify packaging. Switched to lowercase file name.
 
 2015-07-26 v0.1.00 Fixed minor code style issue. The code has been in the wild for several months an has over 100 stars, so we have made this the official 1.0 version.
 
