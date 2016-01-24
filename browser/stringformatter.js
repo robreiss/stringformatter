@@ -113,6 +113,9 @@
 	}
 	
 	function FunctionFormat(spec,func) {
+		if(!(func instanceof Function)) {
+			throw new TypeError("Attempt to create FunctionFormat with non Function " + func);
+		}
 		this.spec = spec;
 		this.func = func;
 	}
@@ -202,6 +205,9 @@
 
 	
 	function DateFormat(spec,date) {
+		if(!(date instanceof Date)) {
+			throw new TypeError("Attempt to create DateFormat with non Date " + JSON.stringify(date));
+		}
 		this.spec = spec;
 		this.date = new Date(date);
 	}
@@ -708,6 +714,10 @@
 		formatter.hits++;
 		var results = [];
 		args = arguments;
+		if(args.length-1<formatter.patterns.length) {
+			var args = [].join.call(arguments,",");
+			throw new Error("Insufficient args format(" + args + ")");
+		}
 		// loop through statics
 		formatter.statics.forEach(function(str,i) {
 			results.push(str); // push them onto the result

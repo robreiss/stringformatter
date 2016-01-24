@@ -284,6 +284,24 @@ describe('StringFormatter ', function() {
 			expect(result).to.equal(test.expected);
 		});
 	});
+	it('throws error for wrong number arguments ', function() {
+		var result;
+		try {
+			 StringFormatter.format("{number} {string}",1);
+		} catch(e) {
+			result = e;
+		}
+		expect(result).to.be.instanceof(Error);
+	});
+	it('throws error for wrong instanceof arguments ', function() {
+		var result;
+		try {
+			 StringFormatter.format("{Date: {format: 'L'}}",1);
+		} catch(e) {
+			result = e;
+		}
+		expect(result).to.be.instanceof(Error);
+	});
 });
 
 /*var value = new Date("Mon, 01 Aug 2005 17:01:01 GMT");

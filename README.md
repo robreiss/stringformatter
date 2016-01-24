@@ -1,7 +1,36 @@
 # stringformatter
-An extensible, garbage collecting JavaScript string formatter that supports objects, currency, date/time, decimals, and more ... goes far beyond sprintf approach.
 
-For documentation see the Wiki: https://github.com/anywhichway/stringformatter/wiki
+StringFormatter JS is an extensible string formatter for Javascript that goes far beyond sprintf or even the forthcoming ECMA6 standard for string formatting. It has built in functionality for:
+
+1. Strings
+2. All numeric types including integers, fixed point, hex, octal, percentages, and financial notation along with special handling for NaN and Infinity.
+3. Booleans
+4. Arrays and Objects
+5. Functions (Coming Soon)
+6. Date/Time formatting similar to the [MomentJS](http://momentjs.com/) library.
+7. Applying CSS styles
+8. Conditional formatting
+
+For example:
+
+````javascript
+format("The time is {Date:{format:'hh:mm'}} and I have {number:{fixed: 2,currency:'$'}}.",
+       new Date('2015-03-13T10:01:27.284Z'),
+       50.25)
+```` 
+returns
+
+````
+The time is 10:01 and I have $50.25.
+````
+
+For speed and memory efficiency StringFormatter "compiles", caches and re-uses format expressions. Expressions that are infrequently used are also garbage collected.
+
+It is easily extensible to provide custom formatters for objects that are instances of specific classes.
+
+Instructions for using the functionality as a helper to the [Ractive](http://www.ractivejs.org/) templating engine are also provided.
+
+For detailed documentation see the Wiki: https://github.com/anywhichway/stringformatter/wiki
 
 For questions, bugs, enhancement requests use: https://github.com/anywhichway/stringformatter/issues
 
@@ -28,6 +57,8 @@ The primary factor bringing down the grade for this code is cyclomatic complexit
 Building & testing is conducted using Travis, Mocha, Chai, and Istanbul.
 
 # Updates (reverse chronological order)
+
+2015-07-27 v0.1.3 Added error handling for wrong number and type of arguments. Added unit tests. Improved documentation in Wiki.
 
 2015-07-27 v0.1.2 Resolved apparent Window/Linux unit test discrepancies. Unit tests were time zone dependent. Local dev box was Windows and remote test box was Linux, so it was a red herring.
 
