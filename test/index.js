@@ -1,5 +1,8 @@
-var StringFormatter = require("../index.js").StringFormatter;
-var expect = require("chai").expect;
+var expect, StringFormatter;
+if(typeof(window)==="undefined") {
+	expect = require("chai").expect;
+	StringFormatter = require("../index.js").StringFormatter;
+}
 
 var format, value, expected, result;
 var tests =[
@@ -230,33 +233,33 @@ var tests =[
 	},
 	{
 		format:"{Date: {format: 'dddd, MMMM Do, YYYY'}}",
-		value: new Date("Mon, 01 Aug 2005 17:01:01 GMT"),
+		value: new Date("Mon, 01 Aug 2005 17:01:01"),
 		expected:"Monday, August 1st, 2005"
 	},
 	{
 		format:"{Date: {format: 'YYYY MM DD hh:mm:ss:SSS A'}}",
-		value: new Date("Mon, 01 Aug 2005 17:01:01 GMT"),
-		expected:"2005 08 01 01:01:01:000 PM"
+		value: new Date("Mon, 01 Aug 2005 17:01:01"),
+		expected:"2005 08 01 05:01:01:000 PM"
 	},
 	{
 		format:"{Date: {format: 'U'}}",
-		value: new Date("Mon, 01 Aug 2005 17:01:01 GMT"),
+		value: new Date("Mon, 01 Aug 2005 17:01:01"),
 		expected:"Mon, 01 Aug 2005 17:01:01 UTC"
 	},
 	{
 		format:"{Date: {format: 'G'}}",
-		value: new Date("Mon, 01 Aug 2005 17:01:01 GMT"),
+		value: new Date("Mon, 01 Aug 2005 17:01:01"),
 		expected:"Mon, 01 Aug 2005 17:01:01 GMT"
 	},
 	{
 		format:"{Date: {format: 'I'}}",
-		value: new Date("Mon, 01 Aug 2005 17:01:01 GMT"),
+		value: new Date("Mon, 01 Aug 2005 17:01:01"),
 		expected:"2005-08-01T17:01:01.000Z"
 	},
 	{
 		format:"{Date: {format: 'L'}}",
-		value: new Date("Mon, 01 Aug 2005 17:01:01 GMT"),
-		expected:"8/1/2005, 1:01:01 PM"
+		value: new Date("Mon, 01 Aug 2005 17:01:01"),
+		expected:"8/1/2005, 5:01:01 PM"
 	},
 	{ // test fix for Bug #11
 		format: "{Date: {format: 'DD-MMM-YYYY hh:mm:ss:SSS A'}}",
@@ -274,6 +277,9 @@ describe('StringFormatter ', function() {
 	var passed = 0, failed = 0;
 	tests.forEach(function(test) {
 		it(test.format + " ",function() {
+			if(test.value instanceof Date && ["{format: 'U'}","{format: 'G'}","{format: 'I'}"].some(function(txt) { return test.format.indexOf(txt)>=0; })) {
+				test.value.setTime(test.value.getTime()-test.value.getTimezoneOffset()*60*1000);
+			}
 			var result = StringFormatter.format(test.format,test.value);
 			expect(result).to.equal(test.expected);
 		});
