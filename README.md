@@ -1,6 +1,6 @@
 # stringformatter
 
-StringFormatter JS is an extensible string formatter for Javascript that goes far beyond sprintf or even the forthcoming ECMA6 standard for string formatting. It has built in functionality for:
+StringFormatter JS is an extensible Javascript string formatting library that goes far beyond sprintf or even the forthcoming ECMA6 standard for string formatting. It has built in functionality for:
 
 1. Strings
 2. All numeric types including integers, fixed point, hex, octal, percentages, and financial notation along with special handling for NaN and Infinity.
@@ -36,7 +36,7 @@ For questions, bugs, enhancement requests use: https://github.com/anywhichway/st
 
 npm install stringformatter
 
-The index.js and package.json files are compatible with https://github.com/anywhichway/stringformatter so that stringformatter can be served directly to the browser from the node-modules/stringformatter directory when using node Express.
+The index.js and package.json files are compatible with https://github.com/anywhichway/node-require so that stringformatter can be served directly to the browser from the node-modules/stringformatter directory when using node Express.
 
 Browser code can also be found in the browser directory at https://github.com/anywhichway/stringformatter.
 
