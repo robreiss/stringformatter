@@ -6,7 +6,7 @@ StringFormatter JS is an extensible Javascript string formatting library that go
 2. All numeric types including integers, fixed point, hex, octal, percentages, and financial notation along with special handling for NaN and Infinity.
 3. Booleans
 4. Arrays and Objects
-5. Functions (Coming Soon)
+5. Functions
 6. Date/Time formatting similar to the [MomentJS](http://momentjs.com/) library.
 7. Applying CSS styles
 8. Conditional formatting
@@ -58,13 +58,15 @@ Building & testing is conducted using Travis, Mocha, Chai, and Istanbul.
 
 # Updates (reverse chronological order)
 
-2015-07-27 v0.1.3 Added error handling for wrong number and type of arguments. Added unit tests. Improved documentation in Wiki.
+2016-01-25 v0.1.4 Added official support for Function formatting. Added unit tests. Corrected dates in versions for this file.
 
-2015-07-27 v0.1.2 Resolved apparent Window/Linux unit test discrepancies. Unit tests were time zone dependent. Local dev box was Windows and remote test box was Linux, so it was a red herring.
+2016-01-23 v0.1.3 Added error handling for wrong number and type of arguments. Added unit tests. Improved documentation in Wiki.
 
-2015-07-26 v0.1.1 Fixed code style issues identified by codeclimate. Converted to Mocha unit tests. Added browserify packaging. Switched to lowercase file name.
+2016-01-23 v0.1.2 Resolved apparent Window/Linux unit test discrepancies. Unit tests were time zone dependent. Local dev box was Windows and remote test box was Linux, so it was a red herring.
 
-2015-07-26 v0.1.00 Fixed minor code style issue. The code has been in the wild for several months an has over 100 stars, so we have made this the official 1.0 version.
+2016-01-17 v0.1.1 Fixed code style issues identified by codeclimate. Converted to Mocha unit tests. Added browserify packaging. Switched to lowercase file name.
+
+2016-07-26 v0.1.00 Fixed minor code style issue. The code has been in the wild for several months an has over 100 stars, so we have made this the official 1.0 version.
 
 2015-07-26 v0.0.83 Fixed code style, complexity, and orphan issues based on Codacy analysis. Changed this update list to reverse chronlogical order. Added Codacy badge. No functional changes.
 

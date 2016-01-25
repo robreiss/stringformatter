@@ -270,6 +270,46 @@ var tests =[
 		format: "{Date: {format: 'DD-MMM-YYYY hh:mm:ss:SS A'}}",
 		value: new Date('2015-04-12 00:12:23:020'),
 		expected:"12-Apr-2015 12:12:23:02 AM"
+	},
+	{ 
+		format: "{Function: {format: 'N'}}",
+		value: function MyFunction(arg1,arg2) { return 1; },
+		expected:"MyFunction"
+	},
+	{ 
+		format: "{Function: {format: 'N'}}",
+		value: function (arg1,arg2) { return 1; },
+		expected:"anonymous"
+	},
+	{ 
+		format: "{Function: {format: 'n'}}",
+		value: function (arg1,arg2) { return 1; },
+		expected:""
+	},
+	{ 
+		format: "{Function: {format: 'v'}}",
+		value: function MyFunction(arg1,arg2) { return 1; },
+		expected:"1"
+	},
+	{ 
+		format: "{Function: {format: 'l'}}",
+		value: function MyFunction(arg1,arg2) { return 1; },
+		expected:"2"
+	},
+	{ 
+		format: "{Function: {format: 'a'}}",
+		value: function MyFunction(arg1,arg2) { return 1; },
+		expected:"arg1, arg2"
+	},
+	{ 
+		format: "{Function: {format: 'b'}}",
+		value: function MyFunction(arg1,arg2) { return 1; },
+		expected:"return 1;"
+	},
+	{ 
+		format: "{Function: {format: 'h'}}",
+		value: function MyFunction(arg1,arg2) { return 1; },
+		expected:"function MyFunction(arg1,arg2)"
 	}
 ];
 
