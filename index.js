@@ -1,5 +1,5 @@
-(function(exports) {
-	
+(function() {
+
 	// (c) 2007 Steven Levithan <stevenlevithan.com>
 	// MIT License matchRecursiveRegExp
 	// (c) 2014, 2015 Simon Y. Blackwell <syblackwell@anywhichway.com>
@@ -857,25 +857,21 @@
 		return functionformat.format();
 	}
 
-	if (this.exports) {
-		this.exports.StringFormatter = new StringFormatter();
-		this.exports.StringFormatter.register(Array,arrayFormatter,"Array");
-		this.exports.StringFormatter.register(Object,objectFormatter,"Object");
-		this.exports.StringFormatter.register(Object,objectFormatter,"object");
-		this.exports.StringFormatter.register(Date,dateFormatter,"Date");
-		this.exports.StringFormatter.register(Function,functionFormatter,"Function");
-		this.exports.StringFormatter.register(Function,functionFormatter,"function");
-	} else if (typeof define === 'function' && define.amd) {
-		// Publish as AMD module
-		define(function() {return Validator;});
-	} else {
-		this.StringFormatter = new StringFormatter();
-		this.StringFormatter.register(Array,arrayFormatter,"Array");
-		this.StringFormatter.register(Object,objectFormatter,"Object");
-		this.StringFormatter.register(Object,objectFormatter,"object");
-		this.StringFormatter.register(Date,dateFormatter,"Date");
-		this.StringFormatter.register(Function,functionFormatter,"Function");
-		this.StringFormatter.register(Function,functionFormatter,"function");
-	}
-	
-}).call((typeof(window)!=='undefined' ? window : (typeof(module)!=='undefined' ? module : null)));
+  var singleton =  new StringFormatter();
+  singleton.register(Array,arrayFormatter,"Array");
+  singleton.register(Object,objectFormatter,"Object");
+  singleton.register(Object,objectFormatter,"object");
+  singleton.register(Date,dateFormatter,"Date");
+  singleton.register(Function,functionFormatter,"Function");
+  singleton.register(Function,functionFormatter,"function");
+
+  if (typeof module !== 'undefined' && module.exports) {
+    module.exports.StringFormatter = singleton;
+  } else if (typeof define === 'function' && define.amd) {
+    define({ StringFormatter: singleton });
+  } else if (typeof window !== 'undefined') {
+    window.StringFormatter = singleton;
+  } else {
+    throw new Error('Error in StringFormatter, unknown module/browser context');
+  }
+})();
